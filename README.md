@@ -11,7 +11,7 @@ To load raw CSV data, assess data quality, and apply minimal, business-safe clea
 - Raw source data was not overwritten; cleaned outputs were written to derived tables.
 
 **Data Profiling & Quality Findings**
-- **Duplicate Records****
+- **Duplicate Records**
 
 **Checks performed:**
 - Primary identifier level (customer_id, subscription_id, event_id)
@@ -25,6 +25,7 @@ To load raw CSV data, assess data quality, and apply minimal, business-safe clea
 **Missing Values — Quantified Findings**
 
 -  **Customers (1000 records)**
+-  
 | Column      | NULL Count | Business Interpretation                               |
 | ----------- | ---------- | ----------------------------------------------------- |
 | customer_id | 0          | Mandatory identifier                                  |
