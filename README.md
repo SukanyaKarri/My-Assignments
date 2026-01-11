@@ -2,6 +2,8 @@
 
 ## Repository Structure
 
+## Repository Structure
+
 My-Assignments/
 
 ├── data/  
@@ -12,22 +14,23 @@ My-Assignments/
 ├── python/  
 │   └── Project-python-data_validation.py  
 │  
+├── sql/  
+│   ├── Assignment.sql  
+│   │   (Contains table creation, data cleaning, core SaaS metrics, and funnel analysis queries)  
+│   ├── MRR.csv  
+│   ├── ARR.csv  
+│   ├── Customer (Logo) Churn Rate.csv  
+│   ├── Revenue Churn Rate.csv  
+│   ├── Average Rate of Churn Per customer (ARPC).csv  
+│   ├── Funnel_analysis.csv  
+│   └── Funnel conversion rates.csv  
+│  
 ├── dashboard/  
 │   ├── dashboard_screenshots.png  
 │   └── dashboard_link.txt  
 │  
-├── sql/  
-│   ├── MRR.csv 
-    |__Assignment.sql  
-│     (Contains table creation, data cleaning, core metrics, and funnel analysis queries) 
-│   ├── ARR.csv  
-│   ├── Customer (Logo) Churn Rate.csv  
-│   ├── Revenue Churn Rate.csv  
-│   ├── Average Rate of Churn Per customer(ARPC).csv  
-│   ├── Funnel_analysis.csv  
-│   └── Funnel conversion rates.csv  
-│  
 └── README.md
+
 
 ## Overview
 This project analyzes customer, subscription, and event data for a SaaS business to understand revenue performance, customer lifecycle behavior, churn, and growth bottlenecks.
@@ -97,7 +100,7 @@ subscription_status = ACTIVE / INACTIVE
 No cleaning required
 
 **Key Principle:**
-NULL ≠ bad data. NULL often represents "unknown" or "ongoing," which is meaningful in SaaS analytics.
+NULL is not equal to bad data. NULL often represents "unknown" or "ongoing," which is meaningful in SaaS analytics.
 
 ## Task 2: Core SaaS Metrics
 
@@ -124,7 +127,7 @@ ARR = Monthly MRR × 12
 - First month shows NULL by design (no prior comparison)
 
 **Average Revenue per Customer (ARPC)**
-- Monthly MRR ÷ total customer count
+- Monthly MRR dived by total customer count
 - NULL values produced by LAG() were preserved as expected time-series behavior.
 
 ## Task 3: Funnel Analysis
@@ -168,7 +171,7 @@ ARR = Monthly MRR × 12
 ## Task 5: Insights & Recommendations
 
 ## Tasks in brief:
-- I analyzed customer lifecycle data using SQL to calculate core SaaS metrics (MRR, churn, funnel conversion).
+- Analyzed customer lifecycle data using SQL to calculate core SaaS metrics (MRR, churn, funnel conversion).
 - I visualized the results in a single dashboard to understand revenue trends, customer drop-offs, churn behavior, and segment distribution,focusing on clarity and business meaning
 
 ## Key growth bottlenecks
@@ -186,7 +189,7 @@ ARR = Monthly MRR × 12
 - This suggests strong retention once customers are onboarded, making early-stage conversion more critical than long-term retention.
 
 ## What I would investigate next
-- Why many users reach Paid without a clearly logged Activated event.
+- Why many users reach Paid without a clearly logged Activated event?
 - Trial user behavior (time spent, feature usage) to understand why activation drops.
 - Segment-level churn and MRR contribution to see which segments drive sustainable revenue, not just volume.
 
