@@ -23,7 +23,7 @@ My-Assignments/
 │   └── Funnel conversion rates.csv  
 │  
 ├── dashboard/  
-│   ├── dashboard_screenshots.png  
+│   ├── Dashboard_updated.png 
 │   └── dashboard_link.txt  
 │  
 └── README.md
