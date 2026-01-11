@@ -11,3 +11,8 @@ Task 1 – Data Loading & Cleaning
 • Subscriptions:
   - NULL end_date treated as active subscription.
 • Events contained no data quality issues.
+
+-- Note on SQL Dialect:
+Although the task specifies MySQL, SQL Server was used due to local environment constraints.
+Therefore, SELECT INTO syntax was used instead of CREATE TABLE AS SELECT.
+All logic is directly portable to MySQL by replacing SELECT INTO with CREATE TABLE AS SELECT.
