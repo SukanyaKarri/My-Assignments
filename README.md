@@ -1,163 +1,171 @@
-# My-Assignments
+# SaaS Growth & GTM Analytics – Data Analyst Assessment
 
-**Task 1**
+## Overview
+This project analyzes customer, subscription, and event data for a SaaS business to understand revenue performance, customer lifecycle behavior, churn, and growth bottlenecks.
+I focused on:
+Preserving factual integrity of the data
+Using business-safe assumptions
+Clearly documenting logic and limitations
+Prioritizing insight over visual or technical complexity
+The analysis combines SQL for core metrics, Python for validation, and Power BI for visualization.
 
-**Objective**
-To load raw CSV data, assess data quality, and apply minimal, business-safe cleaning while preserving factual integrity and avoiding fabricated or misleading data. The goal was clarity and trustworthiness, not cosmetic perfection.
+## Tools Used
+SQL Server (local environment) – data loading, cleaning, and metric computation
+SQL logic is ANSI-compatible and portable to MySQL
+Python (pandas) – lightweight data validation and sanity checks
+Power BI – dashboard visualization
+Note: NumPy and database connectors were not required as all metric calculations were performed in SQL and exported for visualization.
 
-**Data Loading**
-- All CSV files (customers, subscriptions, events) were loaded into a relational database.
-- SQL Server was used locally due to environment constraints; all SQL logic is ANSI-compatible and directly portable to MySQL (e.g., LOAD DATA INFILE, CREATE TABLE AS SELECT equivalents).
-- Raw source data was not overwritten; cleaned outputs were written to derived tables.
+## Data Sources
+customers.csv – customer master data
+subscriptions.csv – subscription lifecycle and pricing
+events.csv – customer lifecycle events
 
-**Data Profiling & Quality Findings**
-- **Duplicate Records**
+## Task 1: Data Loading & Cleaning
 
-**Checks performed:**
-- Primary identifier level (customer_id, subscription_id, event_id)
-- Full-record level (grouping across all columns)
- -  **Result:**
-- No exact duplicate records were detected in any table.
-- Repeated events per customer (e.g., multiple signup or trial_start events) were reviewed and confirmed as legitimate business events, not data duplication.
-- **Context- Reason behind the logic:**
-- A customer can perform the same action multiple times across their lifecycle. Treating these as duplicates would incorrectly remove valid behavioral data.
+### Objective
+Load raw CSV data, identify data quality issues, and apply minimal, business-safe cleaning without fabricating or distorting facts.
 
-**Missing Values — Quantified Findings**
+### Data Loading
+All CSV files were loaded into a relational database.
+Raw tables were preserved.
+Cleaned tables were created separately to maintain lineage and auditability.
 
--  **Customers (1000 records)**
+### Duplicate Analysis
+Checks performed:
+Primary key level (customer_id, subscription_id, event_id)
+Full-record level (all columns)
+Result:
+No exact duplicate records found.
+Repeated customer events (e.g., multiple signup or trial events) were validated as legitimate lifecycle behavior.
+Rationale:
+Customer journeys are not linear; repeated actions represent real behavior and should not be deduplicated.
 
-| Column      | NULL Count | Business Interpretation                               |
-| ----------- | ---------- | ----------------------------------------------------- |
-| customer_id | 0          | Mandatory identifier                                  |
-| signup_date | 36         | Historical / legacy users where date was not captured |
-| segment     | 243        | Customers not yet classified into a segment           |
+### Missing Values – Quantified Findings
+**Customers (1000 records)**
+signup_date: 36 NULLs
+segment: 243 NULLs
 
-**Subscriptions (941 Records)**
-| Column          | NULL Count | Business Interpretation            |
-| --------------- | ---------- | ---------------------------------- |
-| subscription_id | 0          | Mandatory identifier               |
-| customer_id     | 0          | Relationship intact                |
-| start_date      | 0          | Subscription start known           |
-| end_date        | 718        | Subscription has **not ended yet** |
+**Subscriptions (941 records)**
+end_date: 718 NULLs
 
-**Events(2411)**
-| Column      | NULL Count |
-| ----------- | ---------- |
-| event_id    | 0          |
-| customer_id | 0          |
-| event_type  | 0          |
-No missing values were detected in the events dataset.
+**Events (2411 records)**
+No missing values
 
-**Cleaning Decisions & Business Rationale**
-- **Customers**-**segment**
-  - Action: NULLs replaced with 'Unknown'
-  - Rationale: Segment is a categorical label. Replacing NULL improves reporting and grouping while remaining transparent about classification status.
-
-**signup_date**
-- Action: NULLs intentionally retained
-- Rationale: Signup date is a factual timestamp. Imputing or defaulting values would fabricate customer history and distort tenure, cohort, and lifecycle analysis
-**Context- Reason behind the logic:**
-- It is safer to say “we don’t know when this customer signed up” than to invent a date that could mislead decision-makers.
+### Cleaning Decisions & Business Rationale
+**Customers**
+segment: NULL → 'Unknown'
+Improves grouping while remaining transparent
+signup_date: NULLs retained
+Avoids fabricating customer history
 
 **Subscriptions**
-- **end_date**
-- Action: NULLs retained
-- Rationale: A NULL end_date semantically represents an ongoing (active) subscription, not missing data.
+end_date: NULLs retained
+Represents active subscriptions, not missing data
+Derived field added:
+subscription_status = ACTIVE / INACTIVE
 
-**Derived Field Added**
-**subscription_status:**
-- ACTIVE → end_date IS NULL
-- INACTIVE → end_date IS NOT NULL
-**Context- Reason behind the logic:**
- - A customer is only churned when an end date exists. Until then, the relationship is still active. NULL here communicates “not ended yet,” not “unknown.”
 **Events**
-- No cleaning was required.
-- Repeated event types for the same customer were validated as normal lifecycle transitions (e.g., signup → trial → activation).
-**Key Principles Followed**
-- NULL does not mean bad data — it often means unknown, not applicable, or ongoing.
-- Fabricating values (e.g., using 0 or default dates) introduces analytical and audit risk.
-- Only categorical fields were normalized; factual timestamps were preserved.
-- Business meaning was made explicit through derived fields rather than altering raw facts.--
+No cleaning required
 
-**Task 2** **Core SaaS Metrics (MRR,ARR,Customer Churn , Revenue Churn Rate, Average Revenue per customer)**
-- All metrics were calculated using consistent active-subscription logic, with clearly documented assumptions to ensure business interpretability and auditability.”
-- Ref file : 
+**Key Principle:**
+NULL ≠ bad data. NULL often represents "unknown" or "ongoing," which is meaningful in SaaS analytics.
 
-**Objective**
-- To calculate key SaaS performance metrics using subscription data and clearly explain the business logic behind each metric. The focus was on interpretability, consistency, and business realism, rather than over-engineering.
+## Task 2: Core SaaS Metrics
 
-**Environment Note**
-- SQL Server was used locally due to environment constraints.
-- All queries are written using ANSI-compatible logic and are directly portable to MySQL with minor syntax changes (e.g., date functions).
+### Objective
+Calculate and explain core SaaS performance metrics with consistent, business-aligned logic.
 
-**Core Assumptions (Applied Consistently)**
-- A subscription contributes full monthly revenue if it is active for at least one day in a given month (no proration).
-- A subscription with a NULL end_date is considered ongoing (active).
-- Business logic prioritises correctness and interpretability over synthetic data completion.
+### Core Assumptions
+A subscription contributes full revenue if active for at least one day in a month (no proration).
+NULL end_date indicates an active subscription.
+No forecasting or expansion revenue included.
 
-**Metrics Calculated & Business Rationale**
-- **1. Monthly MRR (Monthly Recurring Revenue)**
-- **What:**  Sum of monthly prices of all subscriptions active in a given month.
-- **Why:**  MRR represents predictable, recurring revenue and is the foundation for all other SaaS metrics.
-- **Logic:** A subscription is included if: start_date ≤ month end end_date is NULL or ≥ month start
+### Metrics Calculated
+**Monthly MRR**
+Sum of monthly price for all active subscriptions per month
 
-**2.ARR (Annual Recurring Revenue)**
-- **What:** Annualised recurring revenue.
-- **Why:** Provides a standardised, annual view of business scale.
-- **Logic:** ARR = Monthly MRR × 12 (No growth or churn forecasting applied.)
+**ARR**
+ARR = Monthly MRR × 12
 
 **Customer (Logo) Churn Rate**
-- **What:** Percentage of customers lost month-over-month.
-- **Why:** Measures customer retention independently of revenue size.
-- **Logic:** A customer is churned if: They had ≥1 active subscription in the previous month and They have no active subscriptions in the current month
+Customers active in the previous month but inactive in the current month
 
 **Revenue Churn Rate**
-- **What:** Percentage of recurring revenue lost compared to the previous month.
-- **Why:** Captures the financial impact of churn, not just customer count.
-- **Logic:** Calculated using LAG() on Monthly MRR , Only lost MRR is considered (no expansion or upsell included)
-
-**Note on NULL values appeared while working with LAG:**
-- The first month has NULL revenue churn because there is no prior month for comparison.
-- This is expected behavior and indicates correct time-series logic, not missing data.
+Month-over-month lost MRR using LAG()
+First month shows NULL by design (no prior comparison)
 
 **Average Revenue per Customer (ARPC)**
-- **What:** Average recurring revenue per customer.
-- **Why:** Provides a high-level view of monetisation efficiency across the entire customer base.
-- **Logic:** ARPC = Monthly MRR ÷ Total number of customers (A stable denominator was used to avoid volatility from month-to-month activity changes)
+Monthly MRR ÷ total customer count
+NULL values produced by LAG() were preserved as expected time-series behavior.
 
-**Key Principles Followed**
-- Time-aware metrics: Month-over-month comparisons were explicitly modeled.
-- Business-meaningful NULLs: NULL values were preserved where they represent “not applicable” (e.g., first month in LAG).
-- Simplicity over complexity: No proration, forecasting, or expansion logic was added as it was outside scope
+## Task 3: Funnel Analysis
+**Funnel Definition**
+Signup → Trial → Activated → Paid → Churned
 
-## Task 5: Insights & Recommendations README
+**Findings**
+Largest drop-off occurs between Trial and Activated
+Funnel progression is not strictly linear
+Some users reach Paid without a clearly logged Activated event
 
-### Tasks in breif
-I analyzed customer lifecycle data using SQL to calculate core SaaS metrics (MRR, churn, funnel conversion).
-I visualized the results in a single dashboard to understand revenue trends, customer drop-offs, churn behavior, and segment distribution, Focusing on clarity and business meaning
+**Interpretation**
+This suggests onboarding friction or incomplete event tracking rather than data quality issues.
 
-### Key growth bottlenecks
-- The largest drop-off occurs between Trial and Activated, indicating users start trials but fail to fully activate.
-- Despite a high number of paid users, activation is comparatively low, suggesting timing or event-tracking gaps between activation and payment.
-- Funnel progression is not strictly linear, which may indicate data timing mismatches or users converting to paid without a clearly logged activation event.
+## Task 4: Dashboard
 
-### Strongest and weakest acquisition / customer groups
-- SMB segment represents the largest portion of customers, indicating strong traction in smaller businesses.
-- Enterprise and Mid-Market segments are smaller, suggesting either lower acquisition focus or higher entry friction.
-- The 'Unknown' segment still represents a meaningful share, highlighting gaps in customer classification.
+### Objective
+Create a single dashboard focused on clarity and insight.
 
-### Churn insights
-- Customer churn stabilizes after the initial period, with near-zero churn in later months.
-- This suggests strong retention once customers are onboarded, making early-stage conversion more critical than long-term retention.
+### Charts Included
+1. Monthly MRR Trend
+Shows rapid early growth followed by stabilization
+2. Customer Funnel Conversion
+Highlights Trial → Activation as the primary bottleneck
+3. Customer Churn Overview
+Churn stabilizes after early lifecycle, indicating strong post-activation retention
+4. Customer Distribution by Segment
+SMB dominates customer base
+Enterprise and Mid-Market show lower penetration
+'Unknown' segment highlights data enrichment opportunity
 
-### What to investigate next
-- Why many users reach Paid without a clearly logged Activated event?
-- Trial user behavior (time spent, feature usage) to understand why activation drops.
-- Segment-level churn and MRR contribution to see which segments drive sustainable revenue, not just volume.
+ **Power BI Dashboard Link:**
+[https://app.powerbi.com/links/SqmLXlZrBC?ctid=ef1bdf02-1a23-40dc-a668-6beef7cffc4b&pbi_source=linkShare](https://app.powerbi.com/links/SqmLXlZrBC?ctid=ef1bdf02-1a23-40dc-a668-6beef7cffc4b&pbi_source=linkShare)
 
-### Actionable recommendations for leadership
-- Improve trial-to-activation onboarding
-- Focus on guided onboarding, product walkthroughs, or in-app nudges during the trial phase to reduce early drop-off.
-- Strengthen customer data enrichment
-- Reduce the "Unknown" segment by capturing segment information earlier, enabling better targeting and GTM decisions.
+## Task 5: Insights & Recommendations
 
+### Key Growth Bottlenecks
+Significant drop-off between Trial and Activated
+Funnel progression inconsistencies suggest activation tracking gaps
+
+### Strongest & Weakest Customer Groups
+SMB is the strongest segment by volume
+Enterprise and Mid-Market underrepresented
+Meaningful share of customers remain unclassified
+
+### Churn Insights
+Churn is concentrated early
+Retention stabilizes once customers are activated
+
+### What I Would Investigate Next
+Trial user behavior and activation blockers
+Segment-level MRR and churn contribution
+Event tracking consistency between activation and payment
+
+### Actionable Recommendations
+**Improve trial-to-activation onboarding**
+Focus on guided onboarding, in-app nudges, and early value delivery.
+
+**Strengthen customer data enrichment**
+Reduce the "Unknown" segment to enable better GTM targeting and analysis.
+
+## Assumptions & Limitations
+No revenue proration applied
+No forecasting or expansion revenue modeled
+Dashboard uses aggregated outputs, not raw event-level joins
+
+## Instructions to Reproduce Results
+Clone the repository.
+Load CSV files from the data/ folder into a relational database.
+Execute SQL scripts in order (sql/ folder).
+(Optional) Run the Python validation script/notebook.
+Open Power BI using exported metric tables or the provided dashboard link.
