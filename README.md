@@ -113,21 +113,27 @@ This suggests onboarding friction or incomplete event tracking rather than data 
 
 ## Task 4: Dashboard
 
-### Objective
-Create a single dashboard focused on clarity and insight.
+**1. Monthly MRR Trend**
+Shows month-over-month recurring revenue growth and decline.
+Highlights rapid growth in early months followed by stabilization.
+Used to assess overall revenue momentum and retention impact.
 
-### Charts Included
-1. Monthly MRR Trend
-Shows rapid early growth followed by stabilization
-2. Customer Funnel Conversion
-Highlights Trial → Activation as the primary bottleneck
-3. Customer Churn Overview
-Churn stabilizes after early lifecycle, indicating strong post-activation retention
-4. Customer Distribution by Segment
-SMB dominates customer base
-Enterprise and Mid-Market show lower penetration
-'Unknown' segment highlights data enrichment opportunity
+**2. Customer Funnel Conversion**
+Visualizes the full customer journey: Signup → Trial → Activated → Paid → Churned.
+Clearly shows the largest drop-off occurring between Trial and Activated.
+Used to identify onboarding and activation bottlenecks.
 
+**3. Customer Churn Overview**
+Displays customer churn rate over time.
+Churn stabilizes after the initial period, indicating strong retention post-activation.
+Used to separate early lifecycle issues from long-term retention risk.
+
+**4. Customer Distribution by Segment**
+Breaks down customers across SMB, Enterprise, Mid-Market, and Unknown segments.
+SMB dominates the customer base, while Enterprise adoption remains lower.
+Used to guide go-to-market and targeting strategy.
+
+is this AI generated
  **Power BI Dashboard Link:**
 [https://app.powerbi.com/links/SqmLXlZrBC?ctid=ef1bdf02-1a23-40dc-a668-6beef7cffc4b&pbi_source=linkShare](https://app.powerbi.com/links/SqmLXlZrBC?ctid=ef1bdf02-1a23-40dc-a668-6beef7cffc4b&pbi_source=linkShare)
 
