@@ -1,4 +1,9 @@
 # SaaS Growth & GTM Analytics – Data Analyst Assessment
+/data        → Raw input CSV files  
+/sql         → SQL scripts for data cleaning, metrics, and funnel analysis  
+/python      → Python script for data validation and profiling  
+/dashboard   → Power BI dashboard link and screenshots  
+README.md    → Analysis explanation and insights
 
 ## Overview
 This project analyzes customer, subscription, and event data for a SaaS business to understand revenue performance, customer lifecycle behavior, churn, and growth bottlenecks.
