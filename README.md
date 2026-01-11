@@ -87,7 +87,51 @@ A customer is only churned when an end date exists. Until then, the relationship
 - Only categorical fields were normalized; factual timestamps were preserved.
 - Business meaning was made explicit through derived fields rather than altering raw facts.--
 
-**Task 2**
+**Task 2** Core SaaS Metrics (MRR,ARR,Customer Churn , Revenue Churn Rate, Average Revenue per customer)
 - All metrics were calculated using consistent active-subscription logic, with clearly documented assumptions to ensure business interpretability and auditability.”
 - Ref file : 
 
+**Objective**
+- To calculate key SaaS performance metrics using subscription data and clearly explain the business logic behind each metric. The focus was on interpretability, consistency, and business realism, rather than over-engineering.
+
+**Environment Note**
+- SQL Server was used locally due to environment constraints.
+- All queries are written using ANSI-compatible logic and are directly portable to MySQL with minor syntax changes (e.g., date functions).
+**Core Assumptions (Applied Consistently)**
+- A subscription contributes full monthly revenue if it is active for at least one day in a given month (no proration).
+- A subscription with a NULL end_date is considered ongoing (active).
+- Business logic prioritises correctness and interpretability over synthetic data completion.
+**Metrics Calculated & Business Rationale**
+**1. Monthly MRR (Monthly Recurring Revenue)**
+**What:**  Sum of monthly prices of all subscriptions active in a given month.
+**Why:**  MRR represents predictable, recurring revenue and is the foundation for all other SaaS metrics.
+**Logic:** A subscription is included if: start_date ≤ month end end_date is NULL or ≥ month start
+
+**2.ARR (Annual Recurring Revenue)**
+**What:** Annualised recurring revenue.
+**Why:** Provides a standardised, annual view of business scale.
+**Logic:** ARR = Monthly MRR × 12 (No growth or churn forecasting applied.)
+
+**Customer (Logo) Churn Rate**
+**What:** Percentage of customers lost month-over-month.
+**Why:** Measures customer retention independently of revenue size.
+**Logic:** A customer is churned if: They had ≥1 active subscription in the previous month and They have no active subscriptions in the current month
+
+**Revenue Churn Rate**
+**What:** Percentage of recurring revenue lost compared to the previous month.
+**Why:** Captures the financial impact of churn, not just customer count.
+**Logic:** Calculated using LAG() on Monthly MRR , Only lost MRR is considered (no expansion or upsell included)
+
+**Note on NULL values appeared while working with LAG:**
+- The first month has NULL revenue churn because there is no prior month for comparison.
+- This is expected behavior and indicates correct time-series logic, not missing data.
+
+**Average Revenue per Customer (ARPC)**
+**What:** Average recurring revenue per customer.
+**Why:** Provides a high-level view of monetisation efficiency across the entire customer base.
+**Logic:** ARPC = Monthly MRR ÷ Total number of customers (A stable denominator was used to avoid volatility from month-to-month activity changes)
+
+**Key Principles Followed**
+- Time-aware metrics: Month-over-month comparisons were explicitly modeled.
+- Business-meaningful NULLs: NULL values were preserved where they represent “not applicable” (e.g., first month in LAG).
+- Simplicity over complexity: No proration, forecasting, or expansion logic was added as it was outside scope
