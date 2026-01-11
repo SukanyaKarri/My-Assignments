@@ -67,10 +67,12 @@ Load raw CSV data, identify data quality issues, and apply minimal, business-saf
 Checks performed:
 - Primary key level (customer_id, subscription_id, event_id)
 - Full-record level (all columns)
-**Result:**
+
+- **Result:**
 - No exact duplicate records found.
 - Repeated customer events (e.g., multiple signup or trial events) were validated as legitimate lifecycle behavior.
-**Rationale:**
+
+- **Rationale:**
 Customer journeys are not linear; repeated actions represent real behavior and should not be deduplicated.
 
 ### Missing Values – Quantified Findings
