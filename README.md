@@ -140,33 +140,32 @@ A customer is only churned when an end date exists. Until then, the relationship
 
 # Task 5: Insights & Recommendations README
 
-## What I did
+## Tasks in breif
 I analyzed customer lifecycle data using SQL to calculate core SaaS metrics (MRR, churn, funnel conversion).
-I visualized the results in a single dashboard to understand revenue trends, customer drop-offs, churn behavior, and segment distribution.
-I focused on clarity and business meaning, not over-engineering or visual polish.
+I visualized the results in a single dashboard to understand revenue trends, customer drop-offs, churn behavior, and segment distribution, Focusing on clarity and business meaning
 
 ## Key growth bottlenecks
-The largest drop-off occurs between Trial and Activated, indicating users start trials but fail to fully activate.
-Despite a high number of paid users, activation is comparatively low, suggesting timing or event-tracking gaps between activation and payment.
-Funnel progression is not strictly linear, which may indicate data timing mismatches or users converting to paid without a clearly logged activation event.
+- The largest drop-off occurs between Trial and Activated, indicating users start trials but fail to fully activate.
+- Despite a high number of paid users, activation is comparatively low, suggesting timing or event-tracking gaps between activation and payment.
+- Funnel progression is not strictly linear, which may indicate data timing mismatches or users converting to paid without a clearly logged activation event.
 
 ## Strongest and weakest acquisition / customer groups
-SMB segment represents the largest portion of customers, indicating strong traction in smaller businesses.
-Enterprise and Mid-Market segments are smaller, suggesting either lower acquisition focus or higher entry friction.
-The 'Unknown' segment still represents a meaningful share, highlighting gaps in customer classification.
+- SMB segment represents the largest portion of customers, indicating strong traction in smaller businesses.
+- Enterprise and Mid-Market segments are smaller, suggesting either lower acquisition focus or higher entry friction.
+- The 'Unknown' segment still represents a meaningful share, highlighting gaps in customer classification.
 
 ## Churn insights
-Customer churn stabilizes after the initial period, with near-zero churn in later months.
-This suggests strong retention once customers are onboarded, making early-stage conversion more critical than long-term retention.
+- Customer churn stabilizes after the initial period, with near-zero churn in later months.
+- This suggests strong retention once customers are onboarded, making early-stage conversion more critical than long-term retention.
 
-## What I would investigate next
-Why many users reach Paid without a clearly logged Activated event.
-Trial user behavior (time spent, feature usage) to understand why activation drops.
-Segment-level churn and MRR contribution to see which segments drive sustainable revenue, not just volume.
+## What to investigate next
+- Why many users reach Paid without a clearly logged Activated event?
+- Trial user behavior (time spent, feature usage) to understand why activation drops.
+- Segment-level churn and MRR contribution to see which segments drive sustainable revenue, not just volume.
 
 ## Actionable recommendations for leadership
-Improve trial-to-activation onboarding
-Focus on guided onboarding, product walkthroughs, or in-app nudges during the trial phase to reduce early drop-off.
-Strengthen customer data enrichment
-Reduce the "Unknown" segment by capturing segment information earlier, enabling better targeting and GTM decisions.
+- Improve trial-to-activation onboarding
+- Focus on guided onboarding, product walkthroughs, or in-app nudges during the trial phase to reduce early drop-off.
+- Strengthen customer data enrichment
+- Reduce the "Unknown" segment by capturing segment information earlier, enabling better targeting and GTM decisions.
 
