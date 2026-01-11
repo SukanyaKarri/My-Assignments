@@ -1,7 +1,4 @@
 # SaaS Growth & GTM Analytics – Data Analyst Assessment
-
-## Repository Structure
-
 ## Repository Structure
 
 My-Assignments/
