@@ -79,7 +79,7 @@ No missing values were detected in the events dataset.
 - Only categorical fields were normalized; factual timestamps were preserved.
 - Business meaning was made explicit through derived fields rather than altering raw facts.--
 
-**Task 2** Core SaaS Metrics (MRR,ARR,Customer Churn , Revenue Churn Rate, Average Revenue per customer)
+**Task 2** **Core SaaS Metrics (MRR,ARR,Customer Churn , Revenue Churn Rate, Average Revenue per customer)**
 - All metrics were calculated using consistent active-subscription logic, with clearly documented assumptions to ensure business interpretability and auditability.”
 - Ref file : 
 
@@ -130,32 +130,32 @@ No missing values were detected in the events dataset.
 - Business-meaningful NULLs: NULL values were preserved where they represent “not applicable” (e.g., first month in LAG).
 - Simplicity over complexity: No proration, forecasting, or expansion logic was added as it was outside scope
 
-# Task 5: Insights & Recommendations README
+## Task 5: Insights & Recommendations README
 
-## Tasks in breif
+### Tasks in breif
 I analyzed customer lifecycle data using SQL to calculate core SaaS metrics (MRR, churn, funnel conversion).
 I visualized the results in a single dashboard to understand revenue trends, customer drop-offs, churn behavior, and segment distribution, Focusing on clarity and business meaning
 
-## Key growth bottlenecks
+### Key growth bottlenecks
 - The largest drop-off occurs between Trial and Activated, indicating users start trials but fail to fully activate.
 - Despite a high number of paid users, activation is comparatively low, suggesting timing or event-tracking gaps between activation and payment.
 - Funnel progression is not strictly linear, which may indicate data timing mismatches or users converting to paid without a clearly logged activation event.
 
-## Strongest and weakest acquisition / customer groups
+### Strongest and weakest acquisition / customer groups
 - SMB segment represents the largest portion of customers, indicating strong traction in smaller businesses.
 - Enterprise and Mid-Market segments are smaller, suggesting either lower acquisition focus or higher entry friction.
 - The 'Unknown' segment still represents a meaningful share, highlighting gaps in customer classification.
 
-## Churn insights
+### Churn insights
 - Customer churn stabilizes after the initial period, with near-zero churn in later months.
 - This suggests strong retention once customers are onboarded, making early-stage conversion more critical than long-term retention.
 
-## What to investigate next
+### What to investigate next
 - Why many users reach Paid without a clearly logged Activated event?
 - Trial user behavior (time spent, feature usage) to understand why activation drops.
 - Segment-level churn and MRR contribution to see which segments drive sustainable revenue, not just volume.
 
-## Actionable recommendations for leadership
+### Actionable recommendations for leadership
 - Improve trial-to-activation onboarding
 - Focus on guided onboarding, product walkthroughs, or in-app nudges during the trial phase to reduce early drop-off.
 - Strengthen customer data enrichment
