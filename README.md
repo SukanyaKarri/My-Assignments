@@ -25,7 +25,6 @@ To load raw CSV data, assess data quality, and apply minimal, business-safe clea
 **Missing Values — Quantified Findings**
 
 -  **Customers (1000 records)**
--  
 | Column      | NULL Count | Business Interpretation                               |
 | ----------- | ---------- | ----------------------------------------------------- |
 | customer_id | 0          | Mandatory identifier                                  |
@@ -40,7 +39,7 @@ To load raw CSV data, assess data quality, and apply minimal, business-safe clea
 | start_date      | 0          | Subscription start known           |
 | end_date        | 718        | Subscription has **not ended yet** |
 
-Events(2411)
+**Events(2411)**
 | Column      | NULL Count |
 | ----------- | ---------- |
 | event_id    | 0          |
@@ -49,10 +48,9 @@ Events(2411)
 No missing values were detected in the events dataset.
 
 **Cleaning Decisions & Business Rationale**
-- **Customers**
-- **segment**
-  -- Action: NULLs replaced with 'Unknown'
-  -- Rationale: Segment is a categorical label. Replacing NULL improves reporting and grouping while remaining transparent about classification status.
+- **Customers**-**segment**
+  - Action: NULLs replaced with 'Unknown'
+  - Rationale: Segment is a categorical label. Replacing NULL improves reporting and grouping while remaining transparent about classification status.
 
 **signup_date**
 - Action: NULLs intentionally retained
