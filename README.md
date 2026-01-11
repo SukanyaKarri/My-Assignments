@@ -31,7 +31,7 @@ To load raw CSV data, assess data quality, and apply minimal, business-safe clea
 - A customer can perform the same action multiple times across their lifecycle. Treating these as duplicates would incorrectly remove valid behavioral data.
 
 ****** Missing Values — Quantified Findings******
-- **Customers (1000 records)**
+ **Customers (1000 records)**
 | Column      | NULL Count | Business Interpretation                               |
 | ----------- | ---------- | ----------------------------------------------------- |
 | customer_id | 0          | Mandatory identifier                                  |
@@ -86,5 +86,8 @@ A customer is only churned when an end date exists. Until then, the relationship
 - Fabricating values (e.g., using 0 or default dates) introduces analytical and audit risk.
 - Only categorical fields were normalized; factual timestamps were preserved.
 - Business meaning was made explicit through derived fields rather than altering raw facts.--
--- Note on SQL Dialect:
+
+**Task 2**
+- All metrics were calculated using consistent active-subscription logic, with clearly documented assumptions to ensure business interpretability and auditability.”
+- Ref file : 
 
