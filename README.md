@@ -16,14 +16,15 @@ To load raw CSV data, assess data quality, and apply minimal, business-safe clea
 **Checks performed:**
 - Primary identifier level (customer_id, subscription_id, event_id)
 - Full-record level (grouping across all columns)
-  **Result:**
+ -  **Result:**
 - No exact duplicate records were detected in any table.
 - Repeated events per customer (e.g., multiple signup or trial_start events) were reviewed and confirmed as legitimate business events, not data duplication.
-**Context- Reason behind the logic:**
+- **Context- Reason behind the logic:**
 - A customer can perform the same action multiple times across their lifecycle. Treating these as duplicates would incorrectly remove valid behavioral data.
 
-****** Missing Values — Quantified Findings******
- **Customers (1000 records)**
+**Missing Values — Quantified Findings**
+
+-  **Customers (1000 records)**
 | Column      | NULL Count | Business Interpretation                               |
 | ----------- | ---------- | ----------------------------------------------------- |
 | customer_id | 0          | Mandatory identifier                                  |
