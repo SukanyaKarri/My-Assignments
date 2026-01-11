@@ -97,15 +97,17 @@ A customer is only churned when an end date exists. Until then, the relationship
 **Environment Note**
 - SQL Server was used locally due to environment constraints.
 - All queries are written using ANSI-compatible logic and are directly portable to MySQL with minor syntax changes (e.g., date functions).
+
 **Core Assumptions (Applied Consistently)**
 - A subscription contributes full monthly revenue if it is active for at least one day in a given month (no proration).
 - A subscription with a NULL end_date is considered ongoing (active).
 - Business logic prioritises correctness and interpretability over synthetic data completion.
+
 **Metrics Calculated & Business Rationale**
-**1. Monthly MRR (Monthly Recurring Revenue)**
-**What:**  Sum of monthly prices of all subscriptions active in a given month.
-**Why:**  MRR represents predictable, recurring revenue and is the foundation for all other SaaS metrics.
-**Logic:** A subscription is included if: start_date ≤ month end end_date is NULL or ≥ month start
+- **1. Monthly MRR (Monthly Recurring Revenue)**
+- **What:**  Sum of monthly prices of all subscriptions active in a given month.
+- **Why:**  MRR represents predictable, recurring revenue and is the foundation for all other SaaS metrics.
+- **Logic:** A subscription is included if: start_date ≤ month end end_date is NULL or ≥ month start
 
 **2.ARR (Annual Recurring Revenue)**
 - **What:** Annualised recurring revenue.
