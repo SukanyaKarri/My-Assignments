@@ -157,6 +157,7 @@ ARR = Monthly MRR × 12
 - Displays customer churn rate over time.
 - Churn stabilizes after the initial period, indicating strong retention post-activation.
 - Used to separate early lifecycle issues from long-term retention risk.
+- Customer churn remains stable across observed months, indicating that once customers are onboarded, retention is strong
 
 **4. Customer Distribution by Segment**
 - Breaks down customers across SMB, Enterprise, Mid-Market, and Unknown segments.
